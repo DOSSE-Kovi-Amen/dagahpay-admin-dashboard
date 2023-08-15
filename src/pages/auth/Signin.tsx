@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import '../../assets/css/Signin.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import AuthService from "../../services/AuthService";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Credentials } from "../../constants/types";
 import { useAuthContext } from "../../contexts/AuthContext";
 
@@ -18,8 +18,13 @@ export default function Signin() {
     // Authentication
     const { isAuthenticated } = useAuthContext();
 
-    if (isAuthenticated) { return <Navigate to="/dashboard" replace={true} /> }
+    useEffect(() => { 
+    
+        if (isAuthenticated) { return navigate('/dashboard') }
 
+    }
+    
+    ,[isAuthenticated])
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
@@ -41,7 +46,7 @@ export default function Signin() {
             <main className="form-signin w-100 m-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="text-center">
-                        <FontAwesomeIcon icon={faUser} size="4x" />
+                        <FontAwesomeIcon icon={faUserCircle} size="5x" style={{ color:'gray' }} />
                     </div>
                     <h1 className="h3 mb-3 fw-normal text-center">Admin sign in</h1>
 
@@ -72,6 +77,7 @@ export default function Signin() {
                     <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
                     {error && <p className="text-danger mt-2">{error}</p>}
                 </form>
+                
             </main>
         </div>
     );

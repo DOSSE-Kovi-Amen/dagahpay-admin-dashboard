@@ -5,10 +5,11 @@ import { Credentials } from "../constants/types";
 class AuthService {
 
     async login(credentials: Credentials) {
-        const response = await fetch(`${baseApiUrl}/v1/auth/authenticate`, {
+        const response = await fetch(`${baseApiUrl}/v1/auth/admin/signin`, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
+
             },
             body: JSON.stringify(credentials),
             method: "POST"
@@ -22,20 +23,23 @@ class AuthService {
         const data = await response.json();
         return data;
     }
+
     async currentUser() {
         const authToken = localStorage.getItem("token");
-        const response = await fetch(`${baseApiUrl}/v1/auth/user`, {
+        const response = await fetch(`${baseApiUrl}/v1/accounts/current-user`, {
             headers: {
                 
                 Accept: "application/json",
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${authToken}`,
+     
             },
             method: "GET"
         });
         console.log(response);
 
         if (!response.ok) {
+            this.logout()
             throw new Error("Unauthorized access");
         }
 

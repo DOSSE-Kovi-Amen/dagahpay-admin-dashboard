@@ -1,23 +1,7 @@
-
 /*
    * Sidebar
    */
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    /* rtl:raw:
-    right: 0;
-    */
-    bottom: 0;
-    /* rtl:remove */
-    left: 0;
-    z-index: 100;
-    /* Behind the navbar */
-    padding: 48px 0 0;
-    /* Height of navbar */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-}
 
 @media (max-width: 767.98px) {
     .sidebar {
@@ -36,6 +20,21 @@
     font-weight: 500;
     color: #333;
 }
-.back{
+
+.back {
     background-color: rgba(0, 0, 0, .03)
+}
+
+.sidebar {
+    background-color: #f5f5f5;
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
+    /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar.visible {
+    transform: translateX(-280px);
+    width:0;
+
 }

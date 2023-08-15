@@ -3,9 +3,12 @@ import '../assets/css/main.css'
 import { } from 'react-router-dom';
 import { User } from '../constants/types';
 import AuthService from '../services/AuthService';
+import { useAuthContext } from '../contexts/AuthContext';
 
 export default function Sidebar() {
     const [user, setUser] = useState<User | undefined>();
+    const { isAuthenticated,setAuthenticated } = useAuthContext();
+
     async function getCurrentUser(){
         try {
             const authService = new AuthService()
@@ -20,9 +23,12 @@ export default function Sidebar() {
         }
 
     }
-    async function logout(){
+    
+     function onLogout(){
         const authService = new AuthService()
-        authService.logout()
+        authService.logout();
+        setAuthenticated(false);
+
     }
     useEffect(() => {
         getCurrentUser()
@@ -36,16 +42,17 @@ export default function Sidebar() {
                 </a>
                 <hr />
                 <ul className="nav nav-pills flex-column mb-auto">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link active" aria-current="page">
-                            {/* <HomeIcon className="bi pe-none me-2" width="16" height="16" /> */}
-                            Home
-                        </a>
-                    </li>
+
                     <li>
-                        <a href="#" className="nav-link text-white">
+                        <a href="/dashboard" className="nav-link text-white">
                             {/* <SpeedometerIcon className="bi pe-none me-2" width="16" height="16" /> */}
                             Dashboard
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="/account" className="nav-link active" aria-current="page">
+                            {/* <HomeIcon className="bi pe-none me-2" width="16" height="16" /> */}
+                            Home
                         </a>
                     </li>
                     <li>
@@ -78,7 +85,7 @@ export default function Sidebar() {
                         <li><a className="dropdown-item" href="#">Settings</a></li>
                         <li><a className="dropdown-item" href="#">Profile</a></li>
                         <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" href="#">Sign out</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={onLogout}>Sign out</a></li>
                     </ul>
                 </div>
             </div>
